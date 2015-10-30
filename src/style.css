@@ -1,0 +1,88 @@
+.subpages-menu-container {
+    padding: 0;
+}
+
+.subpages-menu-container [id^=subpages-menu] {
+    border-bottom: 1px solid #ece8e3;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel {
+    border-radius: 0;
+    border: none;
+    margin: 0;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel a {
+    text-decoration: none;
+    font-weight: normal;
+    display: block;
+    color: #000000;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel a:hover {
+    background: #ed1a3b;
+    color: #ffffff;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-heading {
+    background: white;
+    border-top: 1px solid #ece8e3;
+    border-bottom: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-heading h4 {
+    font-size: 14px;
+    padding: 20px 20px;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-heading.has-children a.title-link {
+    width: 80%;
+    display: inline-block;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-heading.has-children a.arrow {
+    width: 19.8%;
+    display: inline-block;
+    padding: 21px 22px 20px 22px;
+    float: right;
+    border-left: 1px solid #ece8e3;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-heading.has-children a.arrow .awesome-triangle {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 7px 0 7px 10px;
+    border-color: transparent transparent transparent #786860;
+    -webkit-transition: all 0.25s ease-in-out;
+    -ms-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-heading.has-children a.arrow:not(.collapsed) .awesome-triangle {
+    -webkit-transform: rotate(90deg) translate3d(0, 0, 0);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-heading.has-children a.arrow:hover .awesome-triangle {
+    border-color: transparent transparent transparent #ffffff;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-body {
+    padding: 0;
+    border: none;
+}
+
+.subpages-menu-container [id^=subpages-menu] .panel .panel-body h4 {
+    padding: 10px 20px;
+    font-size: 14px;
+    margin: 0;
+}
+
