@@ -46,8 +46,8 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		/* Create the widget */
 		$this->WP_Widget($this->pluginName, __('SubPages', $this->pluginName), $widget_ops, $control_ops );
 
-    	// Add shortcode support for widgets
-    	//add_filter('somcsubpages-henrywood', 'do_shortcode');
+		// Add shortcode support for widgets
+		//add_filter('somcsubpages-henrywood', 'do_shortcode');
 	}
 
 	/*
@@ -56,8 +56,8 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 
 	function load_lang() {
 
-        load_plugin_textdomain($this->pluginName, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
-    }		
+		load_plugin_textdomain($this->pluginName, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+	}		
 
 	function stylesheet() {
 
@@ -98,10 +98,10 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		// TODO: Bootstrap should come from CDN
 
 		// Bootstrap
-    	//wp_register_script( 'bootstrap', get_stylesheet_directory_uri() . '/bootstrap/js/bootstrap.min.js', array('jquery'), '3.0.3', true );
-   	    wp_register_script( 'bootstrap', WP_PLUGIN_URL . '/'.$this->pluginName.'/bootstrap/js/bootstrap.min.js', array('jquery'), '3.3.5', true );
-	    wp_enqueue_script( 'bootstrap' );
-    }
+		//wp_register_script( 'bootstrap', get_stylesheet_directory_uri() . '/bootstrap/js/bootstrap.min.js', array('jquery'), '3.0.3', true );
+		wp_register_script( 'bootstrap', WP_PLUGIN_URL . '/'.$this->pluginName.'/bootstrap/js/bootstrap.min.js', array('jquery'), '3.3.5', true );
+		wp_enqueue_script( 'bootstrap' );
+	}
 
 	/*
 	Widget
