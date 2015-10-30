@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: somc-subpages-henrywood
-Plugin URI: https://github.com/henrywood/somcsubpages-henrywood/
+Plugin URI: https://github.com/henrywood/somc-subpages-henrywood/
 Description: Creates a widget and shortcode for displaying the sub pages of the current page.
 Author: HS
 Version: 1.0
