@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: somc-subpages-henrywood
-Plugin URI: https://github.com/henrywood/somc-subpages-henrywood/
+Plugin URI: https://github.com/henrywood/somcsubpages-henrywood/
 Description: Creates a widget and shortcode for displaying the sub pages of the current page.
 Author: HS
 Version: 1.0
@@ -14,9 +14,9 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 
 	private $pluginName;
 
-	/*
-	Constructor
-	*/
+	/** 
+	 * Constructor
+	 */
 
 	public function __construct() {
 
@@ -45,19 +45,16 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 
 		/* Create the widget */
 		$this->WP_Widget($this->pluginName, __('SubPages', $this->pluginName), $widget_ops, $control_ops );
-
-		// Add shortcode support for widgets
-		//add_filter('somcsubpages-henrywood', 'do_shortcode');
 	}
 
-	/*
-	Callbacks
-	*/
+	/** 
+	 * Callbacks
+	 */
 
 	function load_lang() {
 
-		load_plugin_textdomain($this->pluginName, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
-	}		
+        load_plugin_textdomain($this->pluginName, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+    }		
 
 	function stylesheet() {
 
@@ -98,16 +95,16 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		// TODO: Bootstrap should come from CDN
 
 		// Bootstrap
-		//wp_register_script( 'bootstrap', get_stylesheet_directory_uri() . '/bootstrap/js/bootstrap.min.js', array('jquery'), '3.0.3', true );
-		wp_register_script( 'bootstrap', WP_PLUGIN_URL . '/'.$this->pluginName.'/bootstrap/js/bootstrap.min.js', array('jquery'), '3.3.5', true );
-		wp_enqueue_script( 'bootstrap' );
-	}
+    	//wp_register_script( 'bootstrap', get_stylesheet_directory_uri() . '/bootstrap/js/bootstrap.min.js', array('jquery'), '3.0.3', true );
+   	    wp_register_script( 'bootstrap', WP_PLUGIN_URL . '/'.$this->pluginName.'/bootstrap/js/bootstrap.min.js', array('jquery'), '3.3.5', true );
+	    wp_enqueue_script( 'bootstrap' );
+    }
 
-	/*
-	Widget
-	*/
+	/** 
+	 * Widget in frontend
+	 */
 
-	public function widget( $args ) {
+	public function widget( $args, $instance ) {
 
 		global $post;
 
@@ -116,7 +113,10 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		// Get ID of current page
 		$page_id= $post->ID;
 
-		$title = __("SubPages", $this->pluginName);
+		//$title = __("SubPages", $this->pluginName);
+
+		$title = (empty($instance['title'])) ? NULL : $instance['title'];
+        $title = apply_filters('widget_title', $title, $instance, $this->pluginName);
 
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
@@ -127,13 +127,39 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		echo $after_widget;
 	}
 
-	/*
-	Internal API/methods
-	*/
+	/** 
+	 * Widget in backend
+	 */
 
+	function update($new, $old) {
+
+		$instance = array();
+		$instance['title'] = ($new['title']) ? strip_tags($new['title']) : '';
+		return $instance;
+	}
+
+	function form($instance) {
+
+		//Defaults
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+		$title = esc_attr( $instance['title'] );
+     
+		echo '
+        <p><label for="'.$this->get_field_id('title').'">'.__('Title:').'</label><input id="'.$this->get_field_id('title').'" name="'.$this->get_field_name('title').'" type="text" value="'.$title.'" /></p>
+        ';
+    }
+
+	/** 
+	 * Internal API/methods
+	 */
 	protected function truncate($string, $length, $dots = "...") {
 
 	    return (strlen($string) > $length) ? substr($string, 0, $length - strlen($dots)) . $dots : $string;
+	}
+
+	protected function getImage($pageId) {
+
+		return wp_get_attachment_url(get_post_thumbnail_id($pageId));		
 	}
 
 	protected function pagesRecursive($parentId, $lvl){ 
@@ -153,7 +179,7 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 			
 				$sortIcon = ($idx === 0) ? '<span data-order="none" title="'.__('Sort', $this->pluginName).'" class="sort glyphicon glyphicon-sort"></span>' : '';
 
-				$imageCode	= (has_post_thumbnail($page->ID)) ? '<img class="img-rounded img-responsive" src="'.get_post_thumbnail($page->ID).'">' : '';
+				$imageCode	= (has_post_thumbnail($page->ID)) ? '<img class="img-rounded img-responsive" src="'.$this->getImage($page->ID).'">' : '';
 
 				$subPages	= (get_pages(array('child_of' => $page->ID, 'parent' => $page->ID)));
 
@@ -172,9 +198,9 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		               						'.$imageCode.'
 		            					</div>
 		            					<div class="col-md-10 col-xs-8 col-lg-8">
-		         							<h3 class="panel-title">
+		         							<h4 class="panel-title">
 												'.$this->truncate($page->post_title).' 
-		         							</h3>
+		         							</h4>
 		            					</div>
 		            					<div class="col-md-1 col-xs-1 col-lg-1">
 		            						<div class="pull-right">
@@ -210,9 +236,9 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		               						'.$imageCode.'
 		            					</div>
 		            					<div class="col-md-10 col-xs-8 col-lg-8">
-		         							<h3 class="panel-title">
+		         							<h4 class="panel-title">
 												'.$this->truncate($page->post_title).' 
-		         							</h3>
+		         							</h4>
 		            					</div>
 		            					<div class="col-md-1 col-xs-1 col-lg-1">
 
@@ -229,13 +255,17 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 
 		 		// End panel
 				echo '</div>';
-			} 
+
+			} // foreach
 		}
 
 		// End panel-group
 		echo '</div>';
 	}
 
+	/** 
+	 * Display in frontend
+	 */
 	protected function display($page_id) {
 
 		$t = __('Sort', $this->pluginName);
@@ -321,7 +351,7 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 						// Put $children back in the DOM in the newly sorted order
 						\$children.detach().appendTo(\$container);
 
-						// Remove and re-insert the SORT icon (by removing its parent)
+						// Remove and re-insert the SORT icon (by removing its parent - it may have moved after the sorting)
 						\$(this).parent().remove();
 
 						// Find the last DIV under the first row under the first "panel-heading" child of \$container
@@ -354,23 +384,13 @@ SORT;
 		echo $SORT_CODE;
 	}
 	
-	/*
-	Short Code handling
-	*/
+	/** 
+	 * Shortvode handling
+	 */
 	public function shortcode($atts) {
 
 		global $post;
 		extract( $atts );
-
-		// TODO: Support for attributes here
-
-		// extract the attributes into variables
-    	/*
-    	extract(shortcode_atts(array(
-        	'truncation_len' => 20,
-        	'caption' => true,
-    	), $atts));
-		*/
 
 		// Get ID of current page
 		$page_id = $post->ID;
