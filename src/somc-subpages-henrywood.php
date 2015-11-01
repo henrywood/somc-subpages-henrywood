@@ -17,7 +17,6 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 	/** 
 	 * Constructor
 	 */
-
 	public function __construct() {
 
 		$this->pluginName = dirname( plugin_basename(__FILE__));
@@ -47,21 +46,21 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		$this->WP_Widget($this->pluginName, __('SubPages', $this->pluginName), $widget_ops, $control_ops );
 	}
 
-    /**
+	/**
 	 * Method to load language/text domain
-     * @return void
+	 * @return void
 	 */
 	function load_lang() {
 
 		if (function_exists('load_plugin_textdomain')) {
-	        load_plugin_textdomain($this->pluginName, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+			load_plugin_textdomain($this->pluginName, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 		}
-    }		
+	}		
 
-    /**
-     * Method to load styles
-     * @return void
-     */
+	/**
+	 * Method to load styles
+	 * @return void
+	 */
 	function stylesheet() {
 
 		// TODO: Bootstrap should come from CDN
@@ -88,33 +87,37 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 
 	}
 
-    /**
-     * Method to register the widget
-     * @return void
+	/**
+	 * Method to register the widget
+	 * @return void
 	 */
 	function register() {
 		
 		register_widget($this->pluginName);
 	}
 
+	/**
+	 * Method to register scripts
+	 * @return void
+	 */
 	function reg_scripts() {
 
 		// Load JQUERY from core
-  		wp_enqueue_script('jquery');
+		wp_enqueue_script('jquery');
 
 		// TODO: Bootstrap should come from CDN
 
 		// Bootstrap
-    	//wp_register_script( 'bootstrap', get_stylesheet_directory_uri() . '/bootstrap/js/bootstrap.min.js', array('jquery'), '3.0.3', true );
-   	    wp_register_script( 'bootstrap', WP_PLUGIN_URL . '/'.$this->pluginName.'/bootstrap/js/bootstrap.min.js', array('jquery'), '3.3.5', true );
-	    wp_enqueue_script( 'bootstrap' );
-    }
+		//wp_register_script( 'bootstrap', get_stylesheet_directory_uri() . '/bootstrap/js/bootstrap.min.js', array('jquery'), '3.0.3', true );
+		wp_register_script( 'bootstrap', WP_PLUGIN_URL . '/'.$this->pluginName.'/bootstrap/js/bootstrap.min.js', array('jquery'), '3.3.5', true );
+		wp_enqueue_script( 'bootstrap' );
+	}
 
-    /**
-     * Render the widget in the frontend
-     * @param array Arguments of the widget
-     * @param array Settings associated with this widget instance
-     * @return void
+	/**
+	 * Render the widget in the frontend
+	 * @param array Arguments of the widget
+	 * @param array Settings associated with this widget instance
+	 * @return void
 	 */
 	public function widget( $args, $instance ) {
 
@@ -128,7 +131,7 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		//$title = __("SubPages", $this->pluginName);
 
 		$title = (empty($instance['title'])) ? NULL : $instance['title'];
-        $title = apply_filters('widget_title', $title, $instance, $this->pluginName);
+		$title = apply_filters('widget_title', $title, $instance, $this->pluginName);
 
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
@@ -139,11 +142,11 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		echo $after_widget;
 	}
 
-    /**
-     * Method to update widget in backend 
-     * @param array New settings
-     * @param array Old settings
-     * @return array Settings to be stored
+	/**
+	 * Method to update widget in backend 
+	 * @param array New settings
+	 * @param array Old settings
+	 * @return array Settings to be stored
 	 */
 	function update($new, $old) {
 
@@ -152,10 +155,10 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		return $instance;
 	}
 
-    /**
-     * Method to show configuration form of the widget in the backend 
-     * @param array Settings of the new instance
-     * @return void
+	/**
+	 * Method to show configuration form of the widget in the backend 
+	 * @param array Settings of the new instance
+	 * @return void
 	 */
 	function form($instance) {
 
@@ -172,33 +175,33 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 	 * Internal API/methods							*
 	 *----------------------------------------------*/
 
-    /**
-     * Method to truncate a string to a given length 
-     * @param String String to be truncated
-     * @param Int	 Length to truncate to
-     * @param String String to append after truncation	
-     * @return String The new string
+	/**
+	 * Method to truncate a string to a given length 
+	 * @param String String to be truncated
+	 * @param Int	 Length to truncate to
+	 * @param String String to append after truncation	
+	 * @return String The new string
 	 */
 	protected function truncate($string, $length = self::TRUNCATION_LEN, $dots = "...") {
 
 	    return (strlen($string) > $length) ? substr($string, 0, $length - strlen($dots)) . $dots : $string;
 	}
 
-    /**
-     * Method to get the featured image of a page/post
-     * @param Int	 	ID of the page/post
-     * @return String	The url to the featured image
+	/**
+	 * Method to get the featured image of a page/post
+	 * @param Int	 	ID of the page/post
+	 * @return String	The url to the featured image
 	 */
 	protected function getImage($pageId) {
 
 		return wp_get_attachment_url(get_post_thumbnail_id($pageId));		
 	}
 
-    /**
-     * Method to recursively render the subpages tree starting below the parent page specified and 
-     * @param Int	ID of the parent
-     * @param Int	The level we are currently on (set to 0 for the root level)
-     * @return void
+	/**
+	 * Method to recursively render the subpages tree starting below the parent page specified and 
+	 * @param Int	ID of the parent
+	 * @param Int	The level we are currently on (set to 0 for the root level)
+	 * @return void
 	 */
 	protected function pagesRecursive($parentId, $lvl){ 
 
@@ -301,10 +304,10 @@ class SomCSubPagesHENRYWOOD extends WP_Widget {
 		echo '</div>';
 	}
 
-    /**
-     * Method called to render the widget for a particular page/post
-     * @param Int	ID of the page / post we are currently on
-     * @return void
+	/**
+	 * Method called to render the widget for a particular page/post
+	 * @param Int	ID of the page / post we are currently on
+	 * @return void
 	 */
 	protected function display($page_id) {
 
@@ -426,10 +429,10 @@ SORT;
 		echo $SORT_CODE;
 	}
 	
-    /**
-     * Callback used for shortcode support
-     * @param array	Attributes (unused)
-     * @return String HTML that contains the "rendering result"
+	/**
+	 * Callback used for shortcode support
+	 * @param array	Attributes (unused)
+	 * @return String HTML that contains the "rendering result"
 	 */
 	public function shortcode($atts) {
 
